@@ -14,5 +14,18 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return view('admin.dashboard');
 });
+
+Route::get('admin', 'Admin\AdminController@index');
+Route::resource('admin/roles', 'Admin\RolesController');
+Route::resource('admin/permissions', 'Admin\PermissionsController');
+Route::resource('admin/users', 'Admin\UsersController');
+Route::resource('admin/pages', 'Admin\PagesController');
+Route::resource('admin/activitylogs', 'Admin\ActivityLogsController')->only([
+    'index', 'show', 'destroy'
+]);
+Route::resource('admin/settings', 'Admin\SettingsController');
+Route::get('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@getGenerator']);
+Route::post('admin/generator', ['uses' => '\Appzcoder\LaravelAdmin\Controllers\ProcessController@postGenerator']);
